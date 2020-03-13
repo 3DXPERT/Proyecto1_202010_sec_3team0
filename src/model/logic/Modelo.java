@@ -14,11 +14,12 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 
-import model.data_structures.ICola;
+import model.data_structures.IPriorityQueue;
 
-import model.data_structures.Cola;
+
 
 import model.data_structures.Nodo;
+import model.data_structures.PriorityQueue;
 import model.data_structures.noExisteException;
 
 /**
@@ -29,7 +30,7 @@ public class Modelo {
 	/**
 	 * Atributos del modelo del mundo
 	 */
-	private ICola<Comparendo> datosQueue;
+	private IPriorityQueue<Comparendo> datosQueue;
 	
 	
 	
@@ -41,7 +42,7 @@ public class Modelo {
 	public Modelo()
 	{
 		
-		datosQueue = new Cola<Comparendo>();
+		datosQueue = new PriorityQueue<Comparendo>();
 		
 		
 	}
@@ -55,9 +56,9 @@ public class Modelo {
 //		//datos = new ArregloDinamico(capacidad);
 //	}
 	
-	public Cola<Comparendo> darDatosQueue()
+	public PriorityQueue<Comparendo> darDatosQueue()
 	{
-		return  (Cola<Comparendo>) datosQueue;
+		return  (PriorityQueue<Comparendo>) datosQueue;
 	}
 	
 	
@@ -113,7 +114,7 @@ public class Modelo {
 
 
 			
-			Cola<Comparendo> listaQueue = new Cola<Comparendo>();
+			PriorityQueue<Comparendo> listaQueue = new PriorityQueue<Comparendo>();
 
 
 			lector = new JsonReader(new FileReader(path));
@@ -176,18 +177,13 @@ public class Modelo {
 
 
 	} 
-	
-	public String retornarreq1() throws noExisteException
-	{
-		return datosQueue.size()+" " + datosQueue.darPrimero().darGenerico().toString();
-	}
 
 
-	public Cola<Comparendo> procesarColaPorComparendo() throws noExisteException
+	public PriorityQueue<Comparendo> procesarPriorityQueuePorComparendo() throws noExisteException
 	{
 		
 		
-		Cola<Comparendo> arregloFinal = new Cola<Comparendo>();
+		PriorityQueue<Comparendo> arregloFinal = new PriorityQueue<Comparendo>();
 		Nodo<Comparendo> nodoActual = datosQueue.dequeue();
 		Comparendo ComparendoActual = nodoActual.darGenerico();
 		Comparendo siguienteComparendo = nodoActual.darSiguiente().darGenerico();
@@ -195,7 +191,7 @@ public class Modelo {
 		String tipoComparendoActual = ComparendoActual.getInfraccion();
 		
 		
-		Cola<Comparendo> arregloTemporal = new Cola<Comparendo>();
+		PriorityQueue<Comparendo> arregloTemporal = new PriorityQueue<Comparendo>();
 		
 		while(nodoActual != null)
 		{
@@ -206,7 +202,7 @@ public class Modelo {
 				{
 					arregloFinal = arregloTemporal;
 				}
-				arregloTemporal = new  Cola<Comparendo>();
+				arregloTemporal = new  PriorityQueue<Comparendo>();
 			}
 		}
 		
@@ -214,23 +210,23 @@ public class Modelo {
 		
 	} 
 	
-	public Cola<Comparendo> reportarComparendos(int pCantidadComparendos, String tipoComparendo) throws noExisteException
+	public PriorityQueue<Comparendo> reportarComparendos(int pCantidadComparendos, String tipoComparendo) throws noExisteException
 	{
 		Nodo<Comparendo> nodoActual = datosQueue.dequeue();
 		Comparendo ComparendoActual = nodoActual.darGenerico();
-		Cola<Comparendo> cola = new Cola<Comparendo>();
-		while(nodoActual.hasNext() && pCantidadComparendos <= cola.size())
+		PriorityQueue<Comparendo> PriorityQueue = new PriorityQueue<Comparendo>();
+		while(nodoActual.hasNext() && pCantidadComparendos <= PriorityQueue.size())
 		{
 			if(ComparendoActual.getInfraccion().equals(tipoComparendo) )
 			{
-				cola.enqueue(nodoActual);
+				PriorityQueue.enqueue(nodoActual);
 			}
 			
 		}
 		
 		
 		
-		return cola;
+		return PriorityQueue;
 	}
 	
 	

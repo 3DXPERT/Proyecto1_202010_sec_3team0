@@ -10,6 +10,7 @@ public class Nodo<K> implements Iterator<K>
 	private Nodo<K> siguiente;
 	
 	private Nodo<K> anterior;
+	private int prioridad;
 	
 	public Nodo(K pGenerico)
 	
@@ -19,10 +20,25 @@ public class Nodo<K> implements Iterator<K>
 		anterior = null;
 		
 		generico = pGenerico;
+		
+		prioridad = 0;
 				
 	}
 	
-	
+
+    
+    
+    
+    
+    public void setPrioridad (int pPrioridad)
+    {
+    	prioridad = pPrioridad;
+    }
+    
+    public int getPrioridad()
+    {
+    	return prioridad;
+    }
 	public Nodo<K> darSiguiente()
 	{
 		return  siguiente;
